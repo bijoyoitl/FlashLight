@@ -20,28 +20,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton onButton;
+    ImageView onButton;
+    ImageView muteImageView;
 
     private Camera camera;
     private boolean isFlashOn = false;
     private boolean hasFlash;
     private boolean hasFlashLight;
+    boolean isSound = true;
     Camera.Parameters params;
     MediaPlayer mp;
     Context context;
     final public int CAMERA_PERM = 0;
 
     private TextView batteryTextView;
+
+
     private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context arg0, Intent intent) {
-            // TODO Auto-generated method stub
+
             int level = intent.getIntExtra("level", 0);
             batteryTextView.setText(String.valueOf(level) + "%");
         }
@@ -54,13 +59,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.context = this;
 
-        onButton = (ImageButton) findViewById(R.id.onButton);
+        onButton = (ImageView) findViewById(R.id.onButton);
         batteryTextView = (TextView) findViewById(R.id.batteryTextView);
+        muteImageView = (ImageView) findViewById(R.id.muteImageView);
+
         this.registerReceiver(this.mBatInfoReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        // First check if device is supporting flashlight or not
+
+
         hasFlash = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA);
+
         hasFlashLight = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
@@ -73,36 +82,57 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.CAMERA},
                     CAMERA_PERM);
         } else {
-            // user already provided permission
             if (hasFlash) {
                 camera = Camera.open();
                 params = camera.getParameters();
+                flashOnOff();
             } else {
                 showNoFlashAlert();
             }
         }
 
+        muteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isSound) {
+                    isSound = false;
+                    muteImageView.setImageResource(R.drawable.sound_off);
+                } else {
+                    isSound = true;
+                    muteImageView.setImageResource(R.drawable.sound_on);
+                }
+            }
+        });
     }
 
     private class FlashOnOffListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            if (isFlashOn) {
-                params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters(params);
-                camera.stopPreview();
-                isFlashOn = false;
-            } else {
-                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                camera.setParameters(params);
-                playSound();
-                camera.startPreview();
-                isFlashOn = true;
-            }
+            flashOnOff();
 
         }
 
+    }
+
+    private void flashOnOff() {
+        if (isFlashOn) {
+            onButton.setImageResource(R.drawable.poweroff);
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(params);
+            camera.stopPreview();
+            isFlashOn = false;
+        } else {
+            if (isSound) {
+                playSound();
+            }
+
+            onButton.setImageResource(R.drawable.poweron);
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            camera.setParameters(params);
+            camera.startPreview();
+            isFlashOn = true;
+        }
     }
 
     @Override
@@ -114,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     if (hasFlash) {
                         camera = Camera.open();
                         params = camera.getParameters();
+                        flashOnOff();
                     } else {
                         showNoFlashAlert();
                     }
