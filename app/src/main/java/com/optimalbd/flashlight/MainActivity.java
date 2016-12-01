@@ -123,11 +123,10 @@ public class MainActivity extends AppCompatActivity {
             camera.stopPreview();
             isFlashOn = false;
         } else {
+            onButton.setImageResource(R.drawable.poweron);
             if (isSound) {
                 playSound();
             }
-
-            onButton.setImageResource(R.drawable.poweron);
             params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             camera.setParameters(params);
             camera.startPreview();

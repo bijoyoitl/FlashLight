@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/lightImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/poweroff"
         android:layout_gravity="center"
         android:contentDescription="@string/app_name" />
