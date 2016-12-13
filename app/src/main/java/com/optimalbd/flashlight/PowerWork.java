@@ -5,7 +5,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.media.MediaPlayer;
 
-public class FlashLED {
+public class PowerWork {
     Camera camera;
     boolean on_off;
     MediaPlayer mp;
@@ -14,7 +14,7 @@ public class FlashLED {
         return this.on_off;
     }
 
-    public FlashLED() {
+    public PowerWork() {
         this.on_off = false;
         this.camera = Camera.open();
     }
@@ -56,9 +56,9 @@ public class FlashLED {
 
     public void playSound(Context context) {
         if (on_off) {
-            mp = MediaPlayer.create(context, R.raw.turnon);
+            mp = MediaPlayer.create(context, R.raw.sound);
         } else {
-            mp = MediaPlayer.create(context, R.raw.turnon);
+            mp = MediaPlayer.create(context, R.raw.sound);
         }
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 

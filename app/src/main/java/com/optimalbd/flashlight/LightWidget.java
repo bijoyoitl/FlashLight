@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 public class LightWidget extends AppWidgetProvider {
     private static final String ACTION_CLICK = "com.optimalbd.flashlight.action.widget.click";
     private static RemoteViews rv;
-    FlashLED flashLED;
+    PowerWork powerWork;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -47,7 +47,8 @@ public class LightWidget extends AppWidgetProvider {
                     on_off = true;
                 }
                 Utility.powerOnOff = on_off;
-                rv.setImageViewResource(R.id.lightImageView, R.drawable.poweroff);
+                rv.setImageViewResource(R.id.lightImageView, R.drawable.w_deactive);
+                Utility.powerWork.playSound(context);
                 Utility.powerWork.lightOff();
                 Utility.powerWork.Destroy();
             } else {
@@ -55,9 +56,9 @@ public class LightWidget extends AppWidgetProvider {
                     on_off = true;
                 }
                 Utility.powerOnOff = on_off;
-                rv.setImageViewResource(R.id.lightImageView,R.drawable.poweron);
+                rv.setImageViewResource(R.id.lightImageView,R.drawable.w_active);
 
-                Utility.powerWork = new FlashLED();
+                Utility.powerWork = new PowerWork();
                 Utility.powerWork.playSound(context);
                 Utility.powerWork.lightOn();
 

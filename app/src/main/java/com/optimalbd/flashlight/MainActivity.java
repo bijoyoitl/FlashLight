@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isSound) {
                     isSound = false;
-                    muteImageView.setImageResource(R.drawable.sound_off);
+                    muteImageView.setImageResource(R.drawable.sounddeactive);
                 } else {
                     isSound = true;
-                    muteImageView.setImageResource(R.drawable.sound_on);
+                    muteImageView.setImageResource(R.drawable.soundactive);
                 }
             }
         });
@@ -116,21 +116,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void flashOnOff() {
-        if (isFlashOn) {
-            onButton.setImageResource(R.drawable.poweroff);
-            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            camera.setParameters(params);
-            camera.stopPreview();
-            isFlashOn = false;
-        } else {
-            onButton.setImageResource(R.drawable.poweron);
+        if (!isFlashOn) {
+            onButton.setImageResource(R.drawable.active);
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             if (isSound) {
                 playSound();
             }
-            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             camera.setParameters(params);
             camera.startPreview();
             isFlashOn = true;
+
+        } else {
+            onButton.setImageResource(R.drawable.deactive);
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            if (isSound) {
+                playSound();
+            }
+            camera.setParameters(params);
+            camera.stopPreview();
+            isFlashOn = false;
         }
     }
 
@@ -160,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
     // will play button toggle sound on flash on / off
     private void playSound() {
         if (isFlashOn) {
-            mp = MediaPlayer.create(MainActivity.this, R.raw.turnon);
+            mp = MediaPlayer.create(MainActivity.this, R.raw.sound);
         } else {
-            mp = MediaPlayer.create(MainActivity.this, R.raw.turnon);
+            mp = MediaPlayer.create(MainActivity.this, R.raw.sound);
         }
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
