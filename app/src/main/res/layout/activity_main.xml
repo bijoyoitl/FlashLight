@@ -89,7 +89,7 @@
             android:id="@+id/muteImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:src="@drawable/soundactive" />
 
@@ -98,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="SMART_BANNER"
+            android:visibility="gone"
             ads:adUnitId="@string/banner_home_footer"
         />
     </LinearLayout>

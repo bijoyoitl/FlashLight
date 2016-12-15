@@ -133,13 +133,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+/*
         if (isInternetConnection) {
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }else {
             mAdView.setVisibility(View.GONE);
-        }
+        }*/
 
         mTracker.setScreenName("Main Activity");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
