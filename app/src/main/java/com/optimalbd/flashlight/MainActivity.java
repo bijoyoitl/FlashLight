@@ -21,8 +21,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,8 +46,15 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mp;
     Context context;
     final public int CAMERA_PERM = 0;
-
     private TextView batteryTextView;
+    ProgressBar levelPB;
+    AdView mAdView;
+
+    ConnectionDetection detection;
+    Boolean isInternetConnection = false;
+
+     Tracker mTracker;
+    GoogleAnalyticsApplication application;
 
 
     private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
@@ -48,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent intent) {
 
             int level = intent.getIntExtra("level", 0);
+            levelPB.setProgress(level);
             batteryTextView.setText(String.valueOf(level) + "%");
+
         }
     };
 
@@ -62,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
         onButton = (ImageView) findViewById(R.id.onButton);
         batteryTextView = (TextView) findViewById(R.id.batteryTextView);
         muteImageView = (ImageView) findViewById(R.id.muteImageView);
+        levelPB = (ProgressBar) findViewById(R.id.levelPB);
+         mAdView = (AdView) findViewById(R.id.adView);
+
+        detection = new ConnectionDetection(context);
+        isInternetConnection = detection.isConnect();
+
+        application = (GoogleAnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         this.registerReceiver(this.mBatInfoReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -103,7 +127,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isInternetConnection) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }else {
+            mAdView.setVisibility(View.GONE);
+        }
+
+        mTracker.setScreenName("Main Activity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
+
 
     private class FlashOnOffListener implements View.OnClickListener {
 

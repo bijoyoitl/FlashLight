@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "420419498864",
+    "project_id": "flashlight-d1502"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420419498864:android:e7cd6cc21931919b",
+        "android_client_info": {
+          "package_name": "com.optimalbd.flashlight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420419498864-bmgi92128alis4mrvnedgqhjmgek6qrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrja1xea9TyK_nPb3vYlTEl9prF1J1Wcc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-89041507-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

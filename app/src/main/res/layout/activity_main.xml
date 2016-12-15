@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/screen"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.optimalbd.flashlight.MainActivity">
 
-    <TextView
+    <com.optimalbd.flashlight.TextView.SwisTextView
         android:id="@+id/flashTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:text="@string/app_name"
-        android:textColor="@android:color/black"
-        android:textSize="35sp" />
+        android:textColor="#157B88"
+        android:textSize="38sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,19 +24,41 @@
         android:layout_below="@id/flashTV"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/battery"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/battery_i"
+        android:gravity="center">
 
-        <TextView
-            android:id="@+id/batteryTextView"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="100 %"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp">
 
+            <ProgressBar
+                android:id="@+id/levelPB"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minHeight="30dp"
+                android:minWidth="70dp"
+                android:progressDrawable="@drawable/custom_progressbar" />
+
+            <com.optimalbd.flashlight.TextView.SwisTextView
+                android:id="@+id/batteryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="100 %"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -51,10 +71,35 @@
         android:layout_centerVertical="true"
         android:src="@drawable/deactive" />
 
-    <ImageView
-        android:id="@+id/muteImageView"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="addEvent"
+        android:text="a"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/soundactive" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/muteImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/soundactive" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/banner_home_footer"
+        />
+    </LinearLayout>
+
 </RelativeLayout>
